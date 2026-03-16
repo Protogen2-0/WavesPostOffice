@@ -119,6 +119,7 @@ public class Package {
 
     public void setDeclaredValue(double declaredValue) {
         this.declaredValue = declaredValue;
+        setTotalCost(deliveryCost * weight + this.declaredValue * 0.1);
     }
 
     public double getTotalCost() {
