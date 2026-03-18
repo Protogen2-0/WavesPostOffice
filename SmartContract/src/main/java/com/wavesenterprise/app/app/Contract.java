@@ -20,12 +20,14 @@ public class Contract {
     final private Mapping<User> users;
     public Mapping<Transfer> transfers;
     public Mapping<Package> packages;
+    final public ContractState timestamp;
 
     int counter = 1;
 
     public Contract(ContractState state, ContractCall call){
         this.call = call;
         this.users = state.getMapping(new TypeReference<User>(){}, "USER_MAPPING");
+        this.timestamp = state.put("timestamp", new Date());
     }
 
     public void createUser(String name, double balance, String homeAddress, String role, String departmentId, String address){
