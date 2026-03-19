@@ -138,18 +138,4 @@ public class Contract {
         }
     }
 
-    @ContractAction
-    public Mapping<Package> getPackages() {
-        return packages;
-    }
-
-    @ContractAction
-    public Mapping<Transfer> getTransfers() {
-        return transfers;
-    }
-
-    @ContractAction
-    public Mapping<User> getUsers() {
-        return users;
-    }
 }

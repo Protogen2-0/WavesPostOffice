@@ -1,0 +1,11 @@
+
+.container{
+  text-align: center;
+  background: #a577ee;
+  color: white;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  width: auto;
+  height: auto;
+}
