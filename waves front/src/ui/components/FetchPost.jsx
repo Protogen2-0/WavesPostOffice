@@ -1,11 +1,5 @@
-import {useContext} from "react";
-import {Context} from "../../core/context/Context.jsx";
-
-export default async function fetchPost(params) {
-
-    const {address, password, id, port} = useContext(Context);
-
-    try{
+export default async function fetchPost(params, address, password, id, port) {
+    try {
         await fetch(`http://localhost:${port}/transactions/signAndBroadcast`, { // PAY ATTENTION TO PORT
             method: "POST",
             headers: {
@@ -22,8 +16,9 @@ export default async function fetchPost(params) {
                 "contractVersion": 1
             })
         })
+            .then(async(res)=>console.log(await res.json()))
     }
-    catch(e){
-        console.warn(e)
+    catch (error) {
+        console.warn(error)
     }
 }

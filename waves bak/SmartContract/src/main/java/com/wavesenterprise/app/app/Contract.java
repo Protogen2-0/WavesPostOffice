@@ -13,6 +13,8 @@ import com.wavesenterprise.sdk.contract.api.state.mapping.Mapping;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
+import java.util.UUID;
 
 @ContractHandler
 public class Contract {
@@ -20,14 +22,14 @@ public class Contract {
     final private Mapping<User> users;
     public Mapping<Transfer> transfers;
     public Mapping<Package> packages;
-    final public ContractState timestamp;
 
-    int counter = 1;
+    long counter = 1;
 
     public Contract(ContractState state, ContractCall call){
         this.call = call;
         this.users = state.getMapping(new TypeReference<User>(){}, "USER_MAPPING");
-        this.timestamp = state.put("timestamp", new Date());
+        this.transfers = state.getMapping(new TypeReference<Transfer>(){}, "TRANSFER_MAPPING");
+        this.packages = state.getMapping(new TypeReference<Package>(){}, "PACKAGE_MAPPING");
     }
 
     public void createUser(String name, double balance, String homeAddress, String role, String departmentId, String address){
@@ -43,15 +45,16 @@ public class Contract {
     }
 
     @ContractAction
-    public void register(String name, String homeAddress){ createUser(name, 0, homeAddress, "user", "", call.getCaller()); }
+    public void register(String name, String homeAddress){
+        createUser(name, 0, homeAddress, "user", "", call.getCaller());
+    }
 
     @ContractAction
-    public void changeAnotherUserRole(String role, String address, String departmentId){
+    public void changeAnotherUserRole(String role, String address){
         if(users.get(call.getCaller()).getRole().equalsIgnoreCase("admin")){
             if(role.equalsIgnoreCase("user") || role.equalsIgnoreCase("employee")) {
                 User user = users.get(address);
                 user.setRole(role);
-                user.setDepartmentId(role.equalsIgnoreCase("user") ? "" : departmentId);
                 users.put(address, user);
             }
         }
@@ -83,11 +86,13 @@ public class Contract {
     }
 
     @ContractAction
-    public void sendTransfer(String address, double amount, long timeToKeepAlive){
-        if(amount >= users.get(call.getCaller()).getBalance()){
-            User user = users.get(call.getCaller());
+    public void sendTransfer(String address, int amount, int timeToKeepAlive){
+        User user = users.get(call.getCaller());
+        if(amount <= user.getBalance()){
             user.setBalance(user.getBalance() - amount);
-            transfers.put(String.valueOf(new Date().getTime()), new Transfer(call.getCaller(), address, amount, timeToKeepAlive));
+            Transfer transfer = new Transfer(call.getCaller(), address, amount, timeToKeepAlive);
+            String transferId = UUID.randomUUID().toString();
+            transfers.put(transferId, transfer);
             users.put(call.getCaller(), user);
         }
     }
@@ -95,9 +100,8 @@ public class Contract {
     @ContractAction
     public void acceptOrRejectTransfer(String id, boolean wantToAccept){
         Transfer transfer = transfers.get(id);
-        if(transfer.getReceiverAddress().equalsIgnoreCase(call.getCaller()) && transfer.isActive()){
-            User receiver;
-            receiver = users.get(wantToAccept ? call.getCaller() : transfer.getSenderAddress());
+        if(Objects.equals(transfer.getReceiverAddress(), call.getCaller()) && transfer.isActive()){
+            User receiver = users.get(wantToAccept ? call.getCaller() : transfer.getSenderAddress());
             receiver.setBalance(receiver.getBalance() + transfer.getAmount());
             transfer.setActive(false);
             users.put(receiver.getAddress(), receiver);
@@ -106,25 +110,27 @@ public class Contract {
     }
 
     @ContractAction
-    public void sendPackage(String sendTo, String sendFrom, String type, String receiver, int packageClass, double weight, boolean canChangeCost, String twoIndexes){
+    public void sendPackage(String sendTo, String sendFrom, String type, String receiver, long packageClass, double weight, boolean canChangeCost, String twoIndexes){
         String trackNum = "RR" + new SimpleDateFormat("ddMMyyyy").format(new Date()) +  counter++  + twoIndexes;
         Package packagee = new Package(sendTo, sendFrom, type, trackNum, call.getCaller(), receiver, packageClass, weight, canChangeCost);
         User sender = users.get(call.getCaller());
         if(packagee.getTotalCost() <= sender.getBalance()){
             sender.setBalance(sender.getBalance() - packagee.getTotalCost());
             packages.put(trackNum, packagee);
+            users.put(call.getCaller(), sender);
         }
     }
 
     @ContractAction
     public void increaseDeclaredValue(String trackNum, double amount){
-        if(users.get(call.getCaller()).getRole().equalsIgnoreCase("employee")){
+        if(Objects.equals(users.get(call.getCaller()).getRole(), "employee")){
             Package packagee = packages.get(trackNum);
             User sender = users.get(packagee.getSender());
             if(sender.getBalance() >= amount * 0.1 && packagee.isActive()){
                 packagee.setDeclaredValue(packagee.getDeclaredValue() + amount);
                 sender.setBalance(sender.getBalance() - amount * 0.1);
                 packages.put(trackNum, packagee);
+                users.put(packagee.getSender(), sender);
             }
         }
     }

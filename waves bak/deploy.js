@@ -8,9 +8,9 @@ await fetch("http://localhost:6882/transactions/signAndBroadcast", {
                            "version": 2,
                            "sender": "3NsBJbQvU4RArJ3NnmaLge4y4KbHcnh5EDJ", // account address
                            "password": "czNQXN1DO5BCh8PHYYk6qw", // account password
-                           "image": "registry.hub.docker.com/protogen2/waves:4.4.4", // PAY ATTENTION TO VERSION
-                           "contractName": "Contract4.4.4",
-                           "imageHash": "3e30e90acd489aa677c03a8c7bede0d821ae4648ee668728453d60b9d155ac81", // PAY ATTENTION TO HASH
+                           "image": "registry.hub.docker.com/protogen2/waves:5.0.0", // PAY ATTENTION TO VERSION
+                           "contractName": "Contract5.0.0",
+                           "imageHash": "e8bafc0416ead0c5906dc067bc8839c2efbf0f71849c8c4c8eb2860cad123614", // PAY ATTENTION TO HASH
                            "params": [
                              {
                                "type": "string",

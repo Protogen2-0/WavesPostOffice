@@ -8,8 +8,8 @@ public class Package {
     String Type;
     String sender;
     String receiver;
-    int packageClass;
-    int deliveryTime;
+    long packageClass;
+    long deliveryTime;
     double deliveryCost;
     double weight;
     double declaredValue;
@@ -17,7 +17,7 @@ public class Package {
     boolean isActive;
     boolean canChangeCost;
     
-    public Package(String sendTo, String sendFrom, String Type, String trackNum, String sender, String receiver, int packageClass, double weight, boolean canChangeCost){
+    public Package(String sendTo, String sendFrom, String Type, String trackNum, String sender, String receiver, long packageClass, double weight, boolean canChangeCost){
         this.sendTo = sendTo;
         this.sendFrom = sendFrom;
         this.trackNum = trackNum;
@@ -81,19 +81,19 @@ public class Package {
         this.receiver = receiver;
     }
 
-    public int getPackageClass() {
+    public long getPackageClass() {
         return packageClass;
     }
 
-    public void setPackageClass(int packageClass) {
+    public void setPackageClass(long packageClass) {
         this.packageClass = packageClass;
     }
 
-    public int getDeliveryTime() {
+    public long getDeliveryTime() {
         return deliveryTime;
     }
 
-    public void setDeliveryTime(int deliveryTime) {
+    public void setDeliveryTime(long deliveryTime) {
         this.deliveryTime = deliveryTime;
     }
 

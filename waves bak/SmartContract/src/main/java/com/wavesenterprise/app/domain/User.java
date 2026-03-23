@@ -4,7 +4,7 @@ public class User {
 
     String name;
     String homeAddress;
-    double balance;
+    public double balance;
     String role;
     String address;
     String departmentId;

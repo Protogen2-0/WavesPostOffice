@@ -4,15 +4,15 @@ import java.util.Date;
 public class Transfer {
     String senderAddress;
     String receiverAddress;
-    double amount;
-    long timeUntilItsAlive = new Date().getTime();
+    public int amount;
+    int timeUntilItsAlive;
     boolean isActive;
 
-    public Transfer(String senderAddress, String receiverAddress, double amount, long timeToKeepAlive){
+    public Transfer(String senderAddress, String receiverAddress, int amount, int timeToKeepAlive){
         this.senderAddress = senderAddress;
         this.receiverAddress = receiverAddress;
         this.amount = amount;
-        this.timeUntilItsAlive += 1000 * 5 * timeToKeepAlive; // 5 seconds for 1 "timeToKeepAlive"
+        this.timeUntilItsAlive = timeToKeepAlive;
         this.isActive = true;
     }
 
@@ -32,19 +32,19 @@ public class Transfer {
         this.receiverAddress = receiverAddress;
     }
 
-    public double getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
-    public long getTimeUntilItsAlive() {
+    public int getTimeUntilItsAlive() {
         return timeUntilItsAlive;
     }
 
-    public void setTimeUntilItsAlive(long timeUntilItsAlive) {
+    public void setTimeUntilItsAlive(int timeUntilItsAlive) {
         this.timeUntilItsAlive = timeUntilItsAlive;
     }
 

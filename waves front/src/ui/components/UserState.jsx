@@ -7,13 +7,17 @@ export default function UserState() {
     const {id, address} = useContext(Context)
 
     const [state, setState] = useState([])
+    let start = false;
 
     useEffect(() => {
-        (async () => {
-            await fetch(`http://localhost:6882/contracts/${id}`)
-                .then(async res => await res.json())
-                .then(data => setState(data))
-        })()
+        if(!start){
+            start = true;
+            (async () => {
+                await fetch(`http://localhost:6882/contracts/${id}`)
+                    .then(async res => await res.json())
+                    .then(data => setState(data))
+            })()
+        }
     },[id])
 
     return (
