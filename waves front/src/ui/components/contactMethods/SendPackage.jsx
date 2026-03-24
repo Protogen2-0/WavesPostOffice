@@ -16,9 +16,9 @@ export function SendPackage() {
                 {"type": "string", "key": "sendFrom", "value": sendFrom},
                 {"type": "string", "key": "type", "value": type},
                 {"type": "string", "key": "receiver", "value": receiver},
-                {"type": "integer", "key": "packageClass", "value": packageClass},
-                {"type": "integer", "key": "weight", "value": weight},
-                {"type": "boolean", "key": "canChangeCost", "value": canChangeCost},
+                {"type": "string", "key": "packageClass", "value": packageClass},
+                {"type": "string", "key": "weight", "value": weight},
+                {"type": "string", "key": "canChangeCost", "value": canChangeCost},
                 {"type": "string", "key": "twoIndexes", "value": twoIndexes}
             ], address, password, id, port
         )
@@ -28,8 +28,8 @@ export function SendPackage() {
         <Form className="container" onSubmit={async(e) => {
             e.preventDefault();
             await sendPackage(e.target[0].value, e.target[1].value, e.target[2].value,
-                e.target[3].value, Number(e.target[4].value), Number(e.target[5].value),
-                e.target[6].value.toLowerCase() === "true", e.target[7].value);
+                e.target[3].value, e.target[4].value, e.target[5].value,
+                e.target[6].value, e.target[7].value);
         }}>
             <h2>отправление посылки</h2>
             <FormLabel column={1}>укажите адрес отправления</FormLabel>

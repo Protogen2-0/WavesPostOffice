@@ -13,8 +13,8 @@ export default function SendTransfer() {
             [
                 {"type": "string","key": "action","value": "sendTransfer"},
                 {"type": "string","key": "address","value": Address},
-                {"type": "integer","key": "amount","value": amount},
-                {"type": "integer","key": "timeToKeepAlive","value": timeToKeepAlive}
+                {"type": "string","key": "amount","value": amount},
+                {"type": "string","key": "timeToKeepAlive","value": timeToKeepAlive}
             ], address, password, id, port
         )
     }
@@ -22,22 +22,15 @@ export default function SendTransfer() {
     return(
         <Form className="container" onSubmit={async(e)=>{
             e.preventDefault();
-            console.log(
-                [
-                    {"type": "string","key": "action","value": "sendTransfer"},
-                    {"type": "string","key": "address","value": e.target[0].value},
-                    {"type": "integer","key": "amount","value": Number(e.target[1].value)},
-                    {"type": "integer","key": "timeToKeepAlive","value":  Number(e.target[2].value)}
-                ], address, password, id, port);
-            await sendTransfer(e.target[0].value, Number(e.target[1].value), Number(e.target[2].value));
+            await sendTransfer(e.target[0].value, e.target[1].value, e.target[2].value);
         }}>
             <h2>отправка денежного перевода</h2>
             <FormLabel column={1}>укажите адрес получателя</FormLabel>
-            <FormControl placeholder="498o7fcsadc412fg4124f2x" type={"address"}/>
+            <FormControl placeholder="498o7fcsadc412fg4124f2x"/>
             <FormLabel column={1}>укажите сумму</FormLabel>
-            <FormControl placeholder="11.56"/>
+            <FormControl placeholder="11.56" type="number" />
             <FormLabel column={1}>укажите время в течении которого получатель сможет принять/отказаться от перевода</FormLabel>
-            <FormControl placeholder="615"/>
+            <FormControl placeholder="615" type="number" />
             <Button type="submit" className="container">send transfer</Button>
         </Form>
     )

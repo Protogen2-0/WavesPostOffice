@@ -13,7 +13,7 @@ export function IncreaseDeclaredValue() {
             [
                 {"type": "string", "key": "action", "value": "increaseDeclaredValue"},
                 {"type": "string", "key": "trackNum", "value": trackNum},
-                {"type": "integer", "key": "amount", "value": amount}
+                {"type": "string", "key": "amount", "value": amount}
             ], address, password, id, port
         )
     }
@@ -21,7 +21,7 @@ export function IncreaseDeclaredValue() {
     return (
         <Form className="container" onSubmit={async(e) => {
             e.preventDefault();
-            await increaseDeclaredValue(e.target[0].value, Number(e.target[1].value));
+            await increaseDeclaredValue(e.target[0].value, e.target[1].value);
         }}>
             <h2>повышение обьявленной стоимости посылки(только для сотрудника)</h2>
             <FormLabel column={1}>укажите трек номер</FormLabel>
