@@ -2,7 +2,7 @@ import {useContext} from "react";
 import {Context} from "../../core/context/Context.jsx";
 import {Form} from "react-router";
 import {Button, FormControl, FormGroup, FormLabel} from "react-bootstrap";
-import {Header} from "../components/header/Header.jsx";
+import {Header} from "../components/Header.jsx";
 import UserState from "../components/UserState.jsx";
 
 function Authorization(){
@@ -35,17 +35,17 @@ function Authorization(){
                         <h2> авторизация </h2>
                         <FormGroup>
                             <FormLabel column={1}> адрес </FormLabel>
-                            <FormControl placeholder="3Nn2iVjVN3uDmpvHPVvC3nBCpEPXkMsXFK6"/>
+                            <FormControl placeholder="3Nn2iVjVN3uDmpvHPVvC3nBCpEPXkMsXFK6" defaultValue={"3NqyWD9RQeaMnKT6K3suLaYdh6n8AUE9ep4"}/>
                         </FormGroup>
 
                         <FormGroup>
                             <FormLabel column={1}> пароль </FormLabel>
-                            <FormControl placeholder="sadgsrtaergtdh"/>
+                            <FormControl placeholder="sadgsrtaergtdh" defaultValue={"uuEDpWwSe6glar-9DXmfRQ"}/>
                         </FormGroup>
 
                         <FormGroup>
                             <FormLabel column={1}> порт ноды </FormLabel>
-                            <FormControl placeholder="6882" type={"number"} min={0}/>
+                            <FormControl placeholder="6882" type={"number"} min={0} defaultValue={6862}/>
                         </FormGroup>
 
                         <FormGroup>

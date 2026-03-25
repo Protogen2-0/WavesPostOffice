@@ -1,5 +1,5 @@
 export default async function fetchPost(params, address, password, id, port) {
-    console.log(`params : ${params}`);
+    console.log(`params :`, params);
     console.log(`address : ${address}`);
     console.log(`password : ${password}`);
     console.log(`id : ${id}`);

@@ -1,6 +1,6 @@
 #!/bin/bash
 #$1 -- image
-../gradlew clean build
+.././gradlew clean build
 docker build . --platform linux/amd64 -t $1
 docker push $1
 inspectResult=$(docker inspect $1 | grep '"Id": "sha256')

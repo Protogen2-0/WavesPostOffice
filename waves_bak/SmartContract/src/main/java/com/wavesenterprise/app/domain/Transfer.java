@@ -7,6 +7,7 @@ public class Transfer {
     int timeToKeepAlive;
     boolean isActive;
     String id;
+    String status;
 
     public Transfer(String senderAddress, String receiverAddress, double amount, int timeToKeepAlive, String id){
         this.senderAddress = senderAddress;
@@ -15,7 +16,10 @@ public class Transfer {
         this.timeToKeepAlive = timeToKeepAlive;
         this.isActive = true;
         this.id = id;
+        this.status = "sended";
     }
+
+    public Transfer(){}
 
     public String getId() {
         return id;
@@ -65,4 +69,11 @@ public class Transfer {
         isActive = active;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

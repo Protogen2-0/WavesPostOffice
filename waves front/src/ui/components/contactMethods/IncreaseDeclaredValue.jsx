@@ -4,7 +4,7 @@ import fetchPost from "../FetchPost.jsx";
 import {useContext} from "react";
 import {Context} from "../../../core/context/Context.jsx";
 
-export function IncreaseDeclaredValue() {
+export default function IncreaseDeclaredValue() {
 
     const {address, password, id, port} = useContext(Context);
 
@@ -23,7 +23,7 @@ export function IncreaseDeclaredValue() {
             e.preventDefault();
             await increaseDeclaredValue(e.target[0].value, e.target[1].value);
         }}>
-            <h2>повышение обьявленной стоимости посылки(только для сотрудника)</h2>
+            <h2>повышение обьявленной стоимости посылки</h2>
             <FormLabel column={1}>укажите трек номер</FormLabel>
             <FormControl placeholder="RR2143712945713415"/>
             <FormLabel column={1}>укажите новую стоимость</FormLabel>

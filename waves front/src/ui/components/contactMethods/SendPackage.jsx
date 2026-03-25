@@ -4,7 +4,7 @@ import fetchPost from "../FetchPost.jsx";
 import {useContext} from "react";
 import {Context} from "../../../core/context/Context.jsx";
 
-export function SendPackage() {
+export default function SendPackage() {
 
     const {address, password, id, port} = useContext(Context);
 

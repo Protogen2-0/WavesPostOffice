@@ -9,3 +9,14 @@
   width: auto;
   height: auto;
 }
+
+.container2{
+  text-align: center;
+  background: #d9bfff;
+  color: white;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  width: auto;
+  height: auto;
+}

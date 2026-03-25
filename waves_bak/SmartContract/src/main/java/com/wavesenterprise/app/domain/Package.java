@@ -16,6 +16,7 @@ public class Package {
     double totalCost;
     boolean isActive;
     boolean canChangeCost;
+    String status;
     
     public Package(String sendTo, String sendFrom, String Type, String trackNum, String sender, String receiver, byte packageClass, double weight, boolean canChangeCost){
         this.sendTo = sendTo;
@@ -31,7 +32,10 @@ public class Package {
         this.canChangeCost = canChangeCost;
         this.totalCost = deliveryCost * weight + declaredValue * 0.1;
         this.isActive = true;
+        this.status = "sended";
     }
+
+    public Package(){}
 
     public String getSendTo() {
         return sendTo;
@@ -136,5 +140,21 @@ public class Package {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public boolean isCanChangeCost() {
+        return canChangeCost;
+    }
+
+    public void setCanChangeCost(boolean canChangeCost) {
+        this.canChangeCost = canChangeCost;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

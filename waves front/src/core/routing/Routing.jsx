@@ -1,7 +1,7 @@
 import Authorization from "../../ui/pages/Authorization.jsx";
 import {createBrowserRouter} from "react-router";
 import BlockhainState from "../../ui/pages/BlockhainState.jsx";
-import Functions from "../../ui/pages/Function.jsx";
+import Functions from "../../ui/pages/Functions.jsx";
 
 const routes = [
     {
@@ -11,7 +11,7 @@ const routes = [
         path: '/blockchainState', element:<BlockhainState/>
     },
     {
-        path: '/function', element:<Functions/>
+        path: '/functions', element:<Functions/>
     }
 ]
 

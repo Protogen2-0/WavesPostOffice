@@ -6,6 +6,7 @@ const ContextProvider = ({ children }) => {
     const [password, setPassword] = useState("");
     const [port, setPort] = useState("");
     const [id, setId] = useState("");
+    const [state, setState] = useState([]);
 
     const values = {
         address,
@@ -15,7 +16,9 @@ const ContextProvider = ({ children }) => {
         setAddress,
         setPassword,
         setId,
-        setPort
+        setPort,
+        state,
+        setState
     }
 
     return <Context.Provider value={values}>{children}</Context.Provider>;

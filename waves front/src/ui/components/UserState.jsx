@@ -1,12 +1,10 @@
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect} from "react";
 import {Context} from "../../core/context/Context.jsx";
 import { Table} from "react-bootstrap";
-import "../../index.css"
 
 export default function UserState() {
-    const {id, address} = useContext(Context)
+    const {id, address, state, setState} = useContext(Context)
 
-    const [state, setState] = useState([])
     let start = false;
 
     useEffect(() => {
@@ -18,7 +16,7 @@ export default function UserState() {
                     .then(data => setState(data))
             })()
         }
-    },[id])
+    },[])
 
     return (
         <div >
@@ -32,7 +30,7 @@ export default function UserState() {
                 <tbody>
                 {id ?
                     state
-                        .filter((item)=> JSON.parse(item.value).address === address)
+                        .filter((item)=>item.value.includes(address))
                         .map((item, index) => (
                         <tr key={index}>
                             <th> {item.key}</th>

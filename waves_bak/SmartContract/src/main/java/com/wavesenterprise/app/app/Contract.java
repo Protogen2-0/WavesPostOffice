@@ -49,8 +49,9 @@ public class Contract {
 
     @ContractAction
     public void changeAnotherUserRole(String role, String address){
-        if(users.get(call.getCaller()).getRole().equalsIgnoreCase("admin")){
-            if(role.equalsIgnoreCase("user") || role.equalsIgnoreCase("employee")) {
+        if(users.get(call.getCaller()).getRole().equals("admin")){
+            role = role.toLowerCase();
+            if(role.equals("user") || role.equals("employee")) {
                 User user = users.get(address);
                 user.setRole(role);
                 users.put(address, user);
@@ -60,9 +61,9 @@ public class Contract {
 
     @ContractAction
     public void changeDepartmentId(String address, String departmentId){
-        if(users.get(call.getCaller()).getRole().equalsIgnoreCase("admin")){
-            if(users.get(address).getRole().equalsIgnoreCase("employee")){
-                User user = users.get(address);
+        if(users.get(call.getCaller()).getRole().equals("admin")){
+            User user = users.get(address);
+            if(user.getRole().equals("employee")){
                 user.setDepartmentId(departmentId);
                 users.put(address, user);
             }
@@ -99,8 +100,16 @@ public class Contract {
     @ContractAction
     public void acceptOrRejectTransfer(String id, String wantToAccept){
         Transfer transfer = transfers.get(id);
-        if(transfer.getReceiverAddress().equalsIgnoreCase(call.getCaller()) && transfer.isActive()){
-            User receiver = users.get( wantToAccept.equalsIgnoreCase("true") ? call.getCaller() : transfer.getSenderAddress());
+        if(transfer.getReceiverAddress().equals(call.getCaller()) && transfer.isActive()){
+            User receiver;
+            if(wantToAccept.equalsIgnoreCase("true")){
+                receiver = users.get(call.getCaller());
+                transfer.setStatus("accepted");
+            }
+            else{
+                receiver = users.get(transfer.getSenderAddress());
+                transfer.setStatus("rejected");
+            }
             receiver.setBalance(receiver.getBalance() + transfer.getAmount());
             transfer.setActive(false);
             users.put(receiver.getAddress(), receiver);
@@ -122,7 +131,7 @@ public class Contract {
 
     @ContractAction
     public void increaseDeclaredValue(String trackNum, String amount){
-        if(users.get(call.getCaller()).getRole().equalsIgnoreCase("employee")){
+        if(users.get(call.getCaller()).getRole().equals("employee")){
             Package packagee = packages.get(trackNum);
             User sender = users.get(packagee.getSender());
             Double AMOUNT = Double.parseDouble(amount);
@@ -136,10 +145,11 @@ public class Contract {
     }
 
     @ContractAction
-    public void acceptOrRejectPackage(String trackNum){
+    public void acceptOrRejectPackage(String trackNum, String wantToAccept){
         Package packagee = packages.get(trackNum);
-        if(packagee.getReceiver().equalsIgnoreCase(call.getCaller()) && packagee.isActive()){
+        if(packagee.getReceiver().equals(call.getCaller()) && packagee.isActive()){
             packagee.setActive(false);
+            packagee.setStatus(wantToAccept.equalsIgnoreCase("true") ? "accepted" : "rejected");
             packages.put(trackNum, packagee);
         }
     }
